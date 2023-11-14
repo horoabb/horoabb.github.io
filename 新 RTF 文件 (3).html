@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>抽獎直播頁面</title>
+<style>
+  body { font-family: Arial, sans-serif; }
+  .container { display: flex; }
+  .buttons-container {
+    flex: 1;
+    padding: 20px;
+    text-align: left;
+  }
+  .content-container {
+    flex: 4;
+  }
+  .live-stream { margin-top: 20px; width: 100%; }
+  .live-stream iframe { width: 100%; height: 800px; }
+  button {
+    padding: 50px 20px;
+    font-size: 20px;
+    margin-bottom: 50px;
+    width: 100%;
+  }
+  .lottery-info, .winner-info, .upcoming-lottery {
+    margin-top: 20px;
+    margin-top: 20px;
+    padding: 100px;
+    position: relative;
+    right:400px;
+    top:-600px;
+    width:250px;
+    height:0px;
+    font-size: 20px;
+    line-height: 1.8;
+  }
+  .info-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="buttons-container">
+    <button onclick="switchStream('jess')">Jess</button>
+    <button onclick="switchStream('lala')">Lala</button>
+  </div>
+  <div class="content-container">
+    <div class="live-stream" id="liveStream">
+      <!-- 直播流占位符 -->
+      <iframe src="https://www.youtube.com/embed/LIVE_STREAM_ID" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div class="lottery-info">
+      <div id="currentLotteryInfo">
+        <!-- 動態載入的抽獎資訊會顯示在這裡 -->
+      </div>
+    </div>
+
+    <div class="winner-info">
+      <div id="currentWinnerInfo">
+        <!-- 動態載入的中獎資訊會顯示在這裡 -->
+      </div>
+    </div>
+
+    <div class="upcoming-lottery">
+      <div class="info-title">即將上台的5位抽獎人:</div>
+      <ul id="upcomingParticipants">
+        <!-- 動態載入的即將抽獎參與者名單會顯示在這裡 -->
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+var currentStream = 'jess';
+
+function switchStream(streamName) {
+  var liveStream = document.getElementById('liveStream');
+  liveStream.innerHTML = '<iframe src="https://www.youtube.com/embed/' + 
+                         (streamName === 'jess' ? 'LIVE_STREAM_ID_1' : 'LIVE_STREAM_ID_2') + 
+                         '" frameborder="0" allowfullscreen></iframe>';
+  currentStream = streamName;
+}
+switchStream(currentStream);
+
+var participantsDatabase = {
+  '1號': '王XX',
+  '2號': '劉AA',
+  // 可以繼續添加更多參與者信息...
+};
+
+var winnersDatabase = {
+  '1號': '恭喜獲得一等獎！',
+  '2號': '恭喜獲得二等獎！',
+  // 可以繼續添加更多中獎信息...
+};
+
+function updateLotteryInfo(participantNumber) {
+  var participantName = participantsDatabase[participantNumber] || '未知參與者';
+  var infoHtml = '<div>抽獎人號碼: ' + participantNumber + '</div>' +
+                 '<div>抽獎人名字: ' + participantName + '</div>';
+  document.getElementById('currentLotteryInfo').innerHTML = infoHtml;
+}
+
+function updateWinnerInfo(participantNumber) {
+  var winnerMessage = winnersDatabase[participantNumber] || '無中獎信息';
+  var infoHtml = '<div>中獎人號碼: ' + participantNumber + '</div>' +
+                 '<div>中獎人訊息: ' + winnerMessage + '</div>';
+  document.getElementById('currentWinnerInfo').innerHTML = infoHtml;
+}
+
+// 示範用法
+updateLotteryInfo('1號');
+updateWinnerInfo('2號');
+
+</script>
+</body>
+</html>
