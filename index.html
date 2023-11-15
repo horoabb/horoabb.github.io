@@ -6,6 +6,7 @@
 <title>抽獎直播頁面</title>
 <style>
 <<<<<<< HEAD
+<<<<<<< HEAD
   body { font-family: Arial, sans-serif; }
   .container { display: flex; }
   .buttons-container {
@@ -28,6 +29,9 @@
     margin-top: 20px;
 =======
   /* 保持原有的樣式不變 */
+=======
+  /* 您提供的樣式保持不變 */
+>>>>>>> 9b23b0390f2b8083796c68996c2fac2b92ba3831
   body { font-family: Arial, sans-serif; }
   .container { display: flex; }
   .buttons-container { flex: 1; padding: 20px; text-align: left; }
@@ -35,18 +39,18 @@
   .live-stream { margin-top: 20px; width: 100%; }
   .live-stream iframe { width: 100%; height: 800px; }
   button { padding: 50px 20px; font-size: 20px; margin-bottom: 50px; width: 100%; }
+<<<<<<< HEAD
   /* 新增的抽獎信息樣式 */
   .lottery-info, .upcoming-lottery {
 >>>>>>> d1946dc0e2e3a7a70c08fee5d4271bc964ceb145
+=======
+  .lottery-info {
+>>>>>>> 9b23b0390f2b8083796c68996c2fac2b92ba3831
     margin-top: 20px;
-    padding: 100px;
-    position: relative;
-    right:400px;
-    top:-600px;
-    width:250px;
-    height:0px;
+    padding: 20px;
     font-size: 20px;
     line-height: 1.8;
+<<<<<<< HEAD
 <<<<<<< HEAD
   }
   .info-title {
@@ -56,6 +60,9 @@
 =======
 }
 >>>>>>> d1946dc0e2e3a7a70c08fee5d4271bc964ceb145
+=======
+  }
+>>>>>>> 9b23b0390f2b8083796c68996c2fac2b92ba3831
 </style>
 </head>
 <body>
@@ -103,6 +110,7 @@
 </div>
 
 <script>
+<<<<<<< HEAD
 <<<<<<< HEAD
 var currentStream = 'jess';
 
@@ -160,40 +168,46 @@ var winners = {
 
 var currentStream = 'jessie'; // 默認直播流
 
+=======
+>>>>>>> 9b23b0390f2b8083796c68996c2fac2b92ba3831
 function switchStream(streamName) {
   var liveStream = document.getElementById('liveStream');
   var streamId = streamName === 'jessie' ? 'LIVE_STREAM_ID_1' : 'LIVE_STREAM_ID_2';
   liveStream.innerHTML = '<iframe src="https://www.youtube.com/embed/' + streamId + 
                          '" frameborder="0" allowfullscreen></iframe>';
   currentStream = streamName;
-  updateLotteryInfo(streamName);
+  getLotteryInfo(streamName);
 }
 
-// 更新抽獎信息
-function updateLotteryInfo(streamName) {
-  var lotteryInfo = document.getElementById('lotteryInfo');
-  if (streamName === 'jessie') {
-    // 顯示 Jessie 的抽獎信息
-    var participantNumber = '1';
-    var participantName = lotteryParticipants[participantNumber];
-    var winnerNumber = '2';
-    var winnerName = winners[winnerNumber];
-  } else {
-    // 顯示 Lala 的抽獎信息
-    var participantNumber = '3';
-    var participantName = lotteryParticipants[participantNumber];
-    var winnerNumber = '1';
-    var winnerName = winners[winnerNumber];
-  }
+function getLotteryInfo(streamName) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '/lottery-info?stream=' + streamName, true);
+  xhr.onload = function() {
+    if (this.status === 200) {
+      var response = JSON.parse(this.responseText);
+      updateLotteryInfo(response.participantNumber, response.participantName, response.winnerNumber, response.winnerName);
+    } else {
+      console.error('Error fetching lottery info');
+    }
+  };
+  xhr.send();
+}
 
+function updateLotteryInfo(participantNumber, participantName, winnerNumber, winnerName) {
+  var lotteryInfo = document.getElementById('lotteryInfo');
   lotteryInfo.innerHTML = '<p>抽獎號碼: ' + participantNumber + '</p>' +
                           '<p>抽獎名子: ' + participantName + '</p>' +
                           '<p>中獎號碼: ' + winnerNumber + '</p>' +
                           '<p>送禮名子: ' + winnerName + '</p>';
 }
 
+<<<<<<< HEAD
 switchStream(currentStream); // 初始化直播流
 >>>>>>> d1946dc0e2e3a7a70c08fee5d4271bc964ceb145
+=======
+// 初始化直播流
+switchStream('jessie');
+>>>>>>> 9b23b0390f2b8083796c68996c2fac2b92ba3831
 </script>
 </body>
 </html>
